@@ -55,16 +55,4 @@ public class ProductController {
         productService.deleteById(id);
         return "redirect:/";
     }
-
-//    @GetMapping("/students/increase/{id}")
-//    public String increaseStudentScoreById(@PathVariable Long id) {
-//        productService.increaseScore(id);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/students/decrease/{id}")
-//    public String decreaseStudentScoreById(@PathVariable Long id) {
-//        productService.decreaseScore(id);
-//        return "redirect:/";
-//    }
 }
