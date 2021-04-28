@@ -26,10 +26,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", products=" + products +
-                '}';
+        return String.format("Category [id = %d, title = %s, products_count = %d]", id, title, products.size());
     }
 }
