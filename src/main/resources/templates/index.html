@@ -39,7 +39,7 @@
             <tr th:each="p : ${products}">
                 <td th:text="${p.id}"/>
                 <td th:text="${p.title}"/>
-                <td th:text="${p.category_id}"/>
+                <td th:text="${p.category.title}"/>
                 <td th:text="${p.price}"/>
                 <td>
                     <a class="btn btn-danger" th:href="@{'/products/delete/' + ${p.id}}">Удалить запись</a>
@@ -47,7 +47,7 @@
             </tr>
             </tbody>
         </table>
-        <a th:href="@{/products/create}" class="btn btn-primary">Добавить товар</a>
+        <a th:href="@{/products/add}" class="btn btn-primary">Добавить товар</a>
     </div>
 </body>
 </html>

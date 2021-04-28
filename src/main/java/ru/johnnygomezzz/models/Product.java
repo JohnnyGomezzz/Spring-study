@@ -11,6 +11,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
+@NamedQueries({
+        @NamedQuery(name = "withCategory", query = "SELECT p FROM Product p JOIN FETCH p.category WHERE p.id = :id")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

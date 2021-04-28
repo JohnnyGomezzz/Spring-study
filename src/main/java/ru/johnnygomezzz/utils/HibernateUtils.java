@@ -22,7 +22,7 @@ public class HibernateUtils {
                 .configure("hibernate.cfg.xml")
                 .buildSessionFactory();
         try (Session session = sessionFactory.getCurrentSession()) {
-            String sql = Files.lines(Paths.get("C:/Users/Роман/Desktop/demo/full.sql")).collect(Collectors.joining(" "));
+            String sql = Files.lines(Paths.get("full.sql")).collect(Collectors.joining(" "));
             session.beginTransaction();
             session.createNativeQuery(sql).executeUpdate();
             session.getTransaction().commit();
