@@ -14,11 +14,11 @@
         <form method="POST" th:action="@{/products/search}">
         <div class="card-body row no-gutters align-items-center">
             <div class="col">
-                <input class="form-control form-control-lg form-control-borderless" type="number"
+                <input class="form-control form-control-sm form-control-borderless" type="number"
                        placeholder="Поиск продукта по ID" name="id">
             </div>
             <div class="col-auto">
-                <button class="btn btn-lg btn-outline-success" type="submit">Искать</button>
+                <button class="btn btn-sm btn-outline-success" type="submit">Искать</button>
             </div>
         </div>
         </form>
@@ -63,12 +63,14 @@
         </nav>
 
         <form method="GET" th:action="@{/products/sort}">
-            <label>Цена от</label><input type="number" id="minPrice" name="min">
-            <label>до</label><input type="number" id="maxPrice" name="max">
-            <button type="submit">Подтвердить</button>
+            <label>Цена </label><input class="form-control-sm" type="number" placeholder="от" id="minPrice" name="min">
+            <input class="form-control-sm" type="number" placeholder="до" id="maxPrice" name="max">
+            <button class="btn btn-sm btn-outline-success" type="submit">Фильтровать</button>
         </form>
+        <a th:href="@{/}" class="btn btn-sm btn-outline-primary">Сбросить фильтр</a>
 
-        <a th:href="@{/products/add}" class="btn btn-primary">Добавить товар</a>
+        <br>
+        <a th:href="@{/products/add}" class="btn btn-outline-primary">Добавить товар</a>
     </div>
 </body>
 </html>
