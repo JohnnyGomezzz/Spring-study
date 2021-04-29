@@ -18,12 +18,12 @@
                        placeholder="Поиск продукта по ID" name="id">
             </div>
             <div class="col-auto">
-                <button class="btn btn-lg btn-success" type="submit">Искать</button>
+                <button class="btn btn-lg btn-outline-success" type="submit">Искать</button>
             </div>
         </div>
         </form>
         <br>
-        <h1>Список товаров</h1>
+        <h2>Список товаров</h2>
 
         <table class="table table-hover">
             <thead>
@@ -36,17 +36,38 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="p : ${products}">
+            <tr th:each="p : ${page.getContent()}">
                 <td th:text="${p.id}"/>
-                <td th:text="${p.title}"/>
-                <td th:text="${p.category.title}"/>
-                <td th:text="${p.price}"/>
                 <td>
-                    <a class="btn btn-danger" th:href="@{'/products/delete/' + ${p.id}}">Удалить запись</a>
+                    <a th:text="${p.title}" th:href="@{'/products/' + ${p.id}}"></a>
+                </td>
+                <td th:text="${p.category.title}"/>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" th:href="@{'/products/' + ${p.id} + '/price/dec'}">-</a>
+                    <span th:text="${p.price}"/>
+                    <a class="btn btn-outline-primary btn-sm" th:href="@{'/products/' + ${p.id} + '/price/inc'}">+</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-danger btn-sm" th:href="@{'/products/delete/' + ${p.id}}">Удалить товар</a>
                 </td>
             </tr>
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation" th:if="${page.getTotalPages() > 1}">
+            <ul class="pagination">
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
+                    <a th:class="page-link" th:text="${i}" th:href="@{'/?p=' + ${i}}"></a>
+                </li>
+            </ul>
+        </nav>
+
+        <form method="GET" th:action="@{/products/sort}">
+            <label>Цена от</label><input type="number" id="minPrice" name="min">
+            <label>до</label><input type="number" id="maxPrice" name="max">
+            <button type="submit">Подтвердить</button>
+        </form>
+
         <a th:href="@{/products/add}" class="btn btn-primary">Добавить товар</a>
     </div>
 </body>
