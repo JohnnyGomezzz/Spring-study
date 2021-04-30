@@ -11,19 +11,45 @@
 
 <body>
     <div class="container">
-        <form method="POST" th:action="@{/products/search}">
-        <div class="card-body row no-gutters align-items-center">
-            <div class="col">
-                <input class="form-control form-control-sm form-control-borderless" type="number"
-                       placeholder="Поиск продукта по ID" name="id">
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-sm btn-outline-success" type="submit">Искать</button>
-            </div>
-        </div>
-        </form>
-        <br>
+        <p></p>
         <h2>Список товаров</h2>
+        <p></p>
+
+        <div class="container">
+            <form method="POST" th:action="@{/products/search}">
+                <div class="row">
+                    <div>
+                        <input class="form-control form-control-sm" type="number"
+                               placeholder="Поиск продукта по ID" name="id">
+                    </div>&nbsp;
+                    <div>
+                        <button class="btn btn-sm btn-outline-success" type="submit">Искать</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+            <form method="GET" th:action="@{/products/sort}">
+                <div class="row">
+                    <div>
+                        <label>Цена</label>
+                    </div>&nbsp;
+                    <div>
+                        <input class="form-control form-control-sm" type="number" placeholder="от" id="minPrice" name="min">
+                    </div>&nbsp;
+                    <div>
+                        <input class="form-control form-control-sm" type="number" placeholder="до" id="maxPrice" name="max">
+                    </div>&nbsp;
+                    <div>
+                        <button class="btn btn-sm btn-outline-success" type="submit">Фильтровать</button>
+                    </div>&nbsp;
+                    <div>
+                        <a th:href="@{/}" class="btn btn-sm btn-outline-primary">Сбросить фильтр</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <p></p>
 
         <table class="table table-hover">
             <thead>
@@ -62,15 +88,10 @@
             </ul>
         </nav>
 
-        <form method="GET" th:action="@{/products/sort}">
-            <label>Цена </label><input class="form-control-sm" type="number" placeholder="от" id="minPrice" name="min">
-            <input class="form-control-sm" type="number" placeholder="до" id="maxPrice" name="max">
-            <button class="btn btn-sm btn-outline-success" type="submit">Фильтровать</button>
-        </form>
-        <a th:href="@{/}" class="btn btn-sm btn-outline-primary">Сбросить фильтр</a>
-
-        <br>
         <a th:href="@{/products/add}" class="btn btn-outline-primary">Добавить товар</a>
+        <p></p>
+
+
     </div>
 </body>
 </html>

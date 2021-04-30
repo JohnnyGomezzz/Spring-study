@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.johnnygomezzz.models.Product;
 import ru.johnnygomezzz.repositories.ProductRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

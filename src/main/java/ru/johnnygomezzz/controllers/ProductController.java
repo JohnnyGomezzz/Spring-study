@@ -2,7 +2,6 @@ package ru.johnnygomezzz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import ru.johnnygomezzz.models.Product;
 import ru.johnnygomezzz.services.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -78,13 +76,6 @@ public class ProductController {
         productService.deleteById(id);
         return "redirect:/";
     }
-
-//    @GetMapping("/products/sort/low")
-//    public String sortingPricesInDescendingOrder (Model model,  @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
-//        Page<Product> page = productService.findAllPriceLow(pageIndex -1,4);
-//        model.addAttribute("page", page);
-//        return "index";
-//    }
 
     @GetMapping("/products/sort")
     public String showProductsWherePriceBetween(Model model,
