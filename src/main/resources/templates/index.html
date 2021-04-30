@@ -15,24 +15,36 @@
         <h2>Список товаров</h2>
         <p></p>
 
+        <b>Поиск товара</b>
         <div class="container">
             <form method="POST" th:action="@{/products/search}">
                 <div class="row">
                     <div>
                         <input class="form-control form-control-sm" type="number"
-                               placeholder="Поиск продукта по ID" name="id">
+                               placeholder="по ID" name="id">
                     </div>&nbsp;
                     <div>
                         <button class="btn btn-sm btn-outline-success" type="submit">Искать</button>
                     </div>
                 </div>
             </form>
-            <br>
+            <form method="GET" th:action="@{/products/titlesearch}">
+                <div class="row">
+                    <div>
+                        <input class="form-control form-control-sm" type="text"
+                               placeholder="по наименованию" name="title">
+                    </div>&nbsp;
+                    <div>
+                        <button class="btn btn-sm btn-outline-success" type="submit">Искать</button>
+                    </div>
+                </div>
+            </form>
+            <p></p>
 
             <form method="GET" th:action="@{/products/sort}">
                 <div class="row">
                     <div>
-                        <label>Цена</label>
+                        <label><b>Цена</b></label>
                     </div>&nbsp;
                     <div>
                         <input class="form-control form-control-sm" type="number" placeholder="от" id="minPrice" name="min">
@@ -43,13 +55,15 @@
                     <div>
                         <button class="btn btn-sm btn-outline-success" type="submit">Фильтровать</button>
                     </div>&nbsp;
-                    <div>
-                        <a th:href="@{/}" class="btn btn-sm btn-outline-primary">Сбросить фильтр</a>
-                    </div>
                 </div>
             </form>
         </div>
         <p></p>
+
+        <a th:href="@{/}" class="btn btn-sm btn-outline-primary">Сбросить фильтры</a>
+
+        <br>
+        <br>
 
         <table class="table table-hover">
             <thead>

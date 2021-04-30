@@ -3,11 +3,13 @@ package ru.johnnygomezzz.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.johnnygomezzz.models.Product;
 import ru.johnnygomezzz.repositories.ProductRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,6 +51,10 @@ public class ProductService {
 
     public Page<Product> findAllByPriceBetween(int min, int max, int page, int size) {
         return productRepository.findAllByPriceBetween(min, max, PageRequest.of(page, size));
+    }
+
+    public Page<Product> findAllByTitleLike(String title, int page, int size) {
+        return productRepository.findAllByTitleLike(title, PageRequest.of(page, size));
     }
 }
 

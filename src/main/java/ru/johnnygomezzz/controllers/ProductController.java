@@ -79,10 +79,19 @@ public class ProductController {
 
     @GetMapping("/products/sort")
     public String showProductsWherePriceBetween(Model model,
-                                                @RequestParam(name = "min") int min,
+                                                @RequestParam(name = "min", defaultValue = "0") int min,
                                                 @RequestParam(name = "max") int max,
                                                 @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
         Page<Product> page = productService.findAllByPriceBetween(min, max, pageIndex-1, 4);
+        model.addAttribute("page", page);
+        return "index";
+    }
+
+    @GetMapping("/products/titlesearch")
+    public String showProductsByPartOfTitle(Model model,
+                                                @RequestParam(name = "title") String title,
+                                                @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        Page<Product> page = productService.findAllByTitleLike("%" + title + "%", pageIndex - 1, 4);
         model.addAttribute("page", page);
         return "index";
     }
