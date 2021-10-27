@@ -11,9 +11,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
-@NamedQueries({
-        @NamedQuery(name = "withCategory", query = "SELECT p FROM Product p JOIN FETCH p.category WHERE p.id = :id")
-})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,18 +27,13 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Product(String title, int price) {
-        this.title = title;
-        this.price = price;
+    public void incrementPrice(int amount) {
+        price += amount;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", category=" + category +
-                ", price=" + price +
-                '}';
+    public void decrementPrice(int amount) {
+        if (price >= amount) {
+            price -= amount;
+        }
     }
 }

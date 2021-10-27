@@ -1,13 +1,14 @@
 package ru.johnnygomezzz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.johnnygomezzz.models.Product;
 import ru.johnnygomezzz.services.ProductService;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
@@ -20,10 +21,18 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String showAllProductsPage(Model model) {
-        List<Product> products = productService.findAll();
-        model.addAttribute("products", products);
+    public String showAllProductsPage(Model model, @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        if (pageIndex < 1) {
+            pageIndex = 1;
+        }
+        Page<Product> page = productService.findAll(pageIndex - 1, 4);
+        model.addAttribute("page", page);
         return "index";
+    }
+
+    @GetMapping("/page")
+    public String returnToPreviousPage(HttpServletRequest request) {
+        return "redirect:"+ request.getHeader("Referer");
     }
 
     @GetMapping("/products/{id}")
@@ -35,7 +44,7 @@ public class ProductController {
         return "product_info";
     }
     @PostMapping("/products/{id}")
-    public String searchStudentInfo(@RequestParam(defaultValue = "0") Long id, Model model) {
+    public String searchProductInfo(@RequestParam(defaultValue = "0") Long id, Model model) {
         productService.findOneById(id).ifPresent(p -> model.addAttribute("product", p));
         return "product_info";
     }
@@ -50,21 +59,40 @@ public class ProductController {
         return "redirect:/";
     }
 
+    @GetMapping("/products/{id}/price/inc")
+    public String incrementProductPrice(@PathVariable Long id) {
+        productService.incrementPriceById(id, 10);
+        return "redirect:/page";
+    }
+
+    @GetMapping("/products/{id}/price/dec")
+    public String decrementProductPrice(@PathVariable Long id) {
+        productService.decrementPriceById(id, 10);
+        return "redirect:/page";
+    }
+
     @GetMapping("/products/delete/{id}")
     public String deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);
         return "redirect:/";
     }
 
-//    @GetMapping("/students/increase/{id}")
-//    public String increaseStudentScoreById(@PathVariable Long id) {
-//        productService.increaseScore(id);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/students/decrease/{id}")
-//    public String decreaseStudentScoreById(@PathVariable Long id) {
-//        productService.decreaseScore(id);
-//        return "redirect:/";
-//    }
+    @GetMapping("/products/sort")
+    public String showProductsWherePriceBetween(Model model,
+                                                @RequestParam(name = "min", defaultValue = "0") int min,
+                                                @RequestParam(name = "max") int max,
+                                                @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        Page<Product> page = productService.findAllByPriceBetween(min, max, pageIndex-1, 4);
+        model.addAttribute("page", page);
+        return "index";
+    }
+
+    @GetMapping("/products/titlesearch")
+    public String showProductsByPartOfTitle(Model model,
+                                                @RequestParam(name = "title") String title,
+                                                @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        Page<Product> page = productService.findAllByTitleLike("%" + title + "%", pageIndex - 1, 4);
+        model.addAttribute("page", page);
+        return "index";
+    }
 }
